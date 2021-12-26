@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: echo-app
+  namespace: local
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: local
+  source:
+    path: library
+    repoURL: https://github.com/amitkshirsagar13/apps.git
+    targetRevision: HEAD
+    helm:
+      version: v3
+      values: |
+        image:
+          tag: latest
+  destination:
+    namespace: local
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
