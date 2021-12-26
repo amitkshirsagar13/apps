@@ -11,7 +11,7 @@ spec:
     path: library/local/echo
   destination: 
     server: https://kubernetes.default.svc
-    namespace: echo
+    namespace: apps
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
