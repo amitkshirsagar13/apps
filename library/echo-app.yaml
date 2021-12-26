@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: echo-app
-  namespace: local
+  namespace: argocd
 spec:
   project: local
   source:
