@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: echo-app
+  name: sample-app
   namespace: local
   finalizers:
     - resources-finalizer.argocd.argoproj.io
