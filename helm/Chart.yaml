@@ -1,4 +1,0 @@
-apiVersion: v1
-description: local environment application library
-name: local
-version: "1.0.0"
