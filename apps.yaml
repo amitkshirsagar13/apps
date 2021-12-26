@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: local
-  namespace: local
+  namespace: default
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
@@ -12,7 +12,7 @@ spec:
     repoURL: https://github.com/amitkshirsagar13/apps.git
     targetRevision: HEAD
   destination:
-    namespace: local
+    namespace: default
     server: https://kubernetes.default.svc
   syncPolicy:
     automated:
