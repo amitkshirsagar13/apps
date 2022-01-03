@@ -19,7 +19,7 @@ spec:
         - name: echo-pv-storage
           persistentVolumeClaim:
             claimName: echo-pv-claim
-      hostname: echo-server
+      hostname: echo-write
       hostAliases:
         - ip: "127.0.0.1"
           hostnames:
@@ -77,7 +77,7 @@ spec:
         - name: echo-pv-storage
           persistentVolumeClaim:
             claimName: echo-pv-claim-read
-      hostname: echo-server
+      hostname: echo-read
       hostAliases:
         - ip: "127.0.0.1"
           hostnames:
