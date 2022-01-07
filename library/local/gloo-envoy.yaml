@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/amitkshirsagar13/apps.git
     targetRevision: HEAD
-    path: library/local/echo-service
+    path: library/local/gloo-envoy
   destination: 
     server: https://kubernetes.default.svc
     namespace: apps

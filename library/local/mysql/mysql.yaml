@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1 # for k8s versions before 1.9.0 use apps/v1beta2  and before 1.8.0 use extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: storage
+  labels:
+    app: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+      tier: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql
+        tier: mysql
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secrets
+              key: ROOT_PASSWORD
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "800Mi"
+          requests:
+            cpu: "0.3"
+            memory: "512Mi"
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  namespace: storage
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: storage
+  labels:
+    app: mysql
+spec:
+  ports:
+    - name: tcp
+      port: 3306
+      targetPort: 3306
+      protocol: TCP
+  selector:
+    app: mysql
+    tier: mysql
+  clusterIP: None
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mysql-secrets
+  namespace: storage
+type: Opaque
+data:
+  ROOT_PASSWORD: UE1QQWRtaW4wMQ==

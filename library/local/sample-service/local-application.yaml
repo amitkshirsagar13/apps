@@ -18,7 +18,7 @@ spec:
       hostname: sample-service
       containers:
       - name: sample-service
-        image: amitkshirsagar13/sample-service:local
+        image: amitkshirsagar13/sample-service:latest
         imagePullPolicy: Always
         envFrom:
         - configMapRef:
