@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: endpoint-configmap
+  namespace: local-amn
+data:
+  VPORT: "80"
+  DB_USER: root
+  SCHEMA_PREFIX: local
+  spring.profiles.active: test
+  USER_SERVICE_HOST: user-service.localtest.me
+  
