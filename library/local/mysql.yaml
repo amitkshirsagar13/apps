@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gloo-envoy
+  name: mysql
   namespace: argocd
 spec:
   project: local
   source:
     repoURL: https://github.com/amitkshirsagar13/apps.git
     targetRevision: HEAD
-    path: library/local/gloo-envoy
+    path: library/local/mysql
   destination: 
     server: https://kubernetes.default.svc
     namespace: local
