@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: NAMESPACE-stack
+  namespace: argocd
+spec:
+  project: NAMESPACE
+  source:
+    path: library/NAMESPACE
+    repoURL: https://github.com/amitkshirsagar13/apps.git
+    targetRevision: HEAD
+  destination:
+    namespace: NAMESPACE
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

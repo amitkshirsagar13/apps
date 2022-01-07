@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: SERVICENAME
+  namespace: argocd
+spec:
+  project: NAMESPACE
+  source:
+    repoURL: https://github.com/amitkshirsagar13/apps.git
+    targetRevision: HEAD
+    path: library/NAMESPACE/SERVICENAME
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: NAMESPACE
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true
