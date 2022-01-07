@@ -20,6 +20,8 @@ spec:
     server: https://kubernetes.default.svc
   - namespace: apps
     server: https://kubernetes.default.svc
+  - namespace: gloo-system
+    server: https://kubernetes.default.svc
   - namespace: local
     server: https://kubernetes.default.svc
     
