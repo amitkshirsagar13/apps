@@ -23,8 +23,8 @@ spec:
       hostAliases:
         - ip: "127.0.0.1"
           hostnames:
-          - "echo1.local"
-          - "echo2.local"
+          - "echo1.localtest.me"
+          - "echo2.localtest.me"
       containers:
       - name: echo1
         image: gcr.io/google_containers/echoserver:1.10
@@ -81,8 +81,8 @@ spec:
       hostAliases:
         - ip: "127.0.0.1"
           hostnames:
-          - "echo1.local"
-          - "echo2.local"
+          - "echo1.localtest.me"
+          - "echo2.localtest.me"
       containers:
       - name: echo3
         image: gcr.io/google_containers/echoserver:1.10
