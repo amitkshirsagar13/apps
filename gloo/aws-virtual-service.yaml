@@ -9,13 +9,24 @@ spec:
       - 'lambda.localtest.me'
     routes:
       - matchers:
+          - prefix: /hello-transform
+        routeAction:
+          single:
+            destinationSpec:
+              aws:
+                logicalName: hello-world:3
+                responseTransformation: true
+            upstream:
+              name: aws-upstream
+              namespace: gloo-system
+      - matchers:
           - prefix: /hello
         routeAction:
           single:
             destinationSpec:
               aws:
-                logicalName: hello-world
-                responseTransformation: true
+                logicalName: hello-world:2
+                responseTransformation: false
             upstream:
               name: aws-upstream
               namespace: gloo-system

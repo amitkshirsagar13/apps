@@ -22,6 +22,7 @@ exports.handler = async (event) => {
         },
         body: [
             {
+                "random": 'You are going to succeed with your goal!!!',
                 "message": greet + ", " + name + "!!!",
                 "input": event.body
             }
