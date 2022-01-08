@@ -1,0 +1,98 @@
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: regex
+  namespace: gloo-system
+spec:
+  displayName: regex
+  virtualHost:
+    domains:
+    - 'regex.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /404
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: echo-service-read
+              namespace: echo
+            port: 8080
+      options:
+        regexRewrite:
+          pattern:
+            regex: '/404'
+          substitution: '/xxx.html'
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: echo-read
+  namespace: gloo-system
+spec:
+  displayName: echo-read
+  virtualHost:
+    domains:
+    - 'echo-read.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /read
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: echo-service-read
+              namespace: echo
+            port: 8080
+      options:
+        prefixRewrite: /
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: echo-write
+  namespace: gloo-system
+spec:
+  displayName: echo-write
+  virtualHost:
+    domains:
+    - 'echo-write.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /write
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: echo-service-write
+              namespace: echo
+            port: 8081
+      options:
+        prefixRewrite: /echo-write
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: 404-static-service
+  namespace: gloo-system
+spec:
+  displayName: 404-static-service
+  virtualHost:
+    domains:
+    - 'static-service.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: static-service
+              namespace: static
+            port: 80
+      options:
+        regexRewrite: 
+          pattern:
+            regex: '/404'
+          substitution: '/404.html'

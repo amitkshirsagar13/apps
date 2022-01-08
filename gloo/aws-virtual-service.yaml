@@ -1,0 +1,21 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: aws-lambda-service
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+      - 'lambda.localtest.me'
+    routes:
+      - matchers:
+          - prefix: /hello
+        routeAction:
+          single:
+            destinationSpec:
+              aws:
+                logicalName: hello-world
+                responseTransformation: true
+            upstream:
+              name: aws-upstream
+              namespace: gloo-system

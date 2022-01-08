@@ -1,0 +1,11 @@
+apiVersion: gloo.solo.io/v1
+kind: Upstream
+metadata:
+  name: aws-upstream
+  namespace: gloo-system
+spec:
+  aws:
+    region: us-east-1
+    secretRef:
+      name: lambda-runner
+      namespace: gloo-system
