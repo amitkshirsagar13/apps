@@ -1,0 +1,126 @@
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: grafana-service
+  namespace: gloo-system
+spec:
+  displayName: grafana-service
+  virtualHost:
+    domains:
+    - 'grafana.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: grafana-service
+              namespace: monitoring
+            port: 3000
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: prometheus-service
+  namespace: gloo-system
+spec:
+  displayName: prometheus-service
+  virtualHost:
+    domains:
+    - 'prometheus.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: prometheus-service
+              namespace: monitoring
+            port: 8080
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: alertmanager-service
+  namespace: gloo-system
+spec:
+  displayName: alertmanager-service
+  virtualHost:
+    domains:
+    - 'alertmanager.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: alertmanager-service
+              namespace: monitoring
+            port: 9093
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: kube-state-metrics-8080
+  namespace: gloo-system
+spec:
+  displayName: kube-state-metrics-8080
+  virtualHost:
+    domains:
+    - 'kube-state-metrics-8080.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: kube-state-metrics
+              namespace: kube-system
+            port: 8080
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: kube-state-metrics-8081
+  namespace: gloo-system
+spec:
+  displayName: kube-state-metrics-8081
+  virtualHost:
+    domains:
+    - 'kube-state-metrics-8081.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: kube-state-metrics
+              namespace: kube-system
+            port: 8081
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: node-exporter-service
+  namespace: gloo-system
+spec:
+  displayName: node-exporter-service
+  virtualHost:
+    domains:
+    - 'node-exporter-service.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: node-exporter-service
+              namespace: monitoring
+            port: 9100
