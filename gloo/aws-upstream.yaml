@@ -1,3 +1,36 @@
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: aws-lambda-service
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+      - 'lambda.localtest.me'
+    routes:
+      - matchers:
+          - prefix: /hello-transform
+        routeAction:
+          single:
+            destinationSpec:
+              aws:
+                logicalName: hello-world:3
+                responseTransformation: true
+            upstream:
+              name: aws-upstream
+              namespace: gloo-system
+      - matchers:
+          - prefix: /hello
+        routeAction:
+          single:
+            destinationSpec:
+              aws:
+                logicalName: hello-world:2
+                responseTransformation: false
+            upstream:
+              name: aws-upstream
+              namespace: gloo-system
+---
 apiVersion: gloo.solo.io/v1
 kind: Upstream
 metadata:
@@ -9,3 +42,13 @@ spec:
     secretRef:
       name: lambda-runner
       namespace: gloo-system
+    # will only work in eks
+    # roleArn: arn:aws:iam::361648904729:role/lambda-gloo
+    lambdaFunctions:
+    - logicalName: hello-world:1
+      lambdaFunctionName: hello-world1
+    - logicalName: hello-world:2
+      lambdaFunctionName: hello-world2
+    - logicalName: hello-world:3
+      lambdaFunctionName: hello-world3
+      
