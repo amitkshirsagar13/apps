@@ -96,3 +96,24 @@ spec:
           pattern:
             regex: '/404'
           substitution: '/404.html'
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: kiali
+  namespace: gloo-system
+spec:
+  displayName: kiali
+  virtualHost:
+    domains:
+    - 'kiali.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: kiali
+              namespace: istio-system
+            port: 20001
