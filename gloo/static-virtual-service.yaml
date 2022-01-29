@@ -1,0 +1,26 @@
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: 404-static-service
+  namespace: gloo-system
+spec:
+  displayName: 404-static-service
+  virtualHost:
+    domains:
+    - 'static-service.localtest.me'
+    routes:
+    - matchers:
+      - exact: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: static-service
+              namespace: static
+            port: 80
+      options:
+        regexRewrite: 
+          pattern:
+            regex: '/'
+          substitution: '/404.html'

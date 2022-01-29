@@ -16,9 +16,9 @@ spec:
         single:
           kube:
             ref:
-              name: grafana-service
+              name: kube-prometheus-stack-grafana
               namespace: monitoring
-            port: 3000
+            port: 80
 ---
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
@@ -37,9 +37,9 @@ spec:
         single:
           kube:
             ref:
-              name: prometheus-service
+              name: kube-prometheus-stack-prometheus
               namespace: monitoring
-            port: 8080
+            port: 9090
 ---
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
@@ -50,7 +50,7 @@ spec:
   displayName: alertmanager-service
   virtualHost:
     domains:
-    - 'alertmanager.localtest.me'
+    - 'alert.localtest.me'
     routes:
     - matchers:
       - prefix: /
@@ -58,7 +58,7 @@ spec:
         single:
           kube:
             ref:
-              name: alertmanager-service
+              name: kube-prometheus-stack-alertmanager
               namespace: monitoring
             port: 9093
 ---
@@ -71,7 +71,7 @@ spec:
   displayName: kube-state-metrics-8080
   virtualHost:
     domains:
-    - 'kube-state-metrics-8080.localtest.me'
+    - 'kube-state-metrics.localtest.me'
     routes:
     - matchers:
       - prefix: /
@@ -79,30 +79,9 @@ spec:
         single:
           kube:
             ref:
-              name: kube-state-metrics
-              namespace: kube-system
+              name: kube-prometheus-stack-kube-state-metrics
+              namespace: monitoring
             port: 8080
----
-apiVersion: gateway.solo.io/v1
-kind: VirtualService
-metadata:
-  name: kube-state-metrics-8081
-  namespace: gloo-system
-spec:
-  displayName: kube-state-metrics-8081
-  virtualHost:
-    domains:
-    - 'kube-state-metrics-8081.localtest.me'
-    routes:
-    - matchers:
-      - prefix: /
-      routeAction:
-        single:
-          kube:
-            ref:
-              name: kube-state-metrics
-              namespace: kube-system
-            port: 8081
 ---
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
@@ -121,6 +100,6 @@ spec:
         single:
           kube:
             ref:
-              name: node-exporter-service
+              name: kube-prometheus-stack-prometheus-node-exporter
               namespace: monitoring
             port: 9100
