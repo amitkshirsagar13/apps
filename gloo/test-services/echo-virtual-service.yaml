@@ -1,79 +1,79 @@
----
-apiVersion: gateway.solo.io/v1
-kind: VirtualService
-metadata:
-  name: regex
-  namespace: gloo-system
-spec:
-  displayName: regex
-  virtualHost:
-    domains:
-    - 'regex.localtest.me'
-    routes:
-    - matchers:
-      - prefix: /404
-      routeAction:
-        single:
-          kube:
-            ref:
-              name: echo-service-read
-              namespace: local
-            port: 8080
-      options:
-        regexRewrite:
-          pattern:
-            regex: '/404'
-          substitution: '/xxx.html'
----
-apiVersion: gateway.solo.io/v1
-kind: VirtualService
-metadata:
-  name: echo-read
-  namespace: gloo-system
-spec:
-  displayName: echo-read
-  virtualHost:
-    domains:
-    - 'echo-read.localtest.me'
-    routes:
-    - matchers:
-      - prefix: /read
-      routeAction:
-        single:
-          kube:
-            ref:
-              name: echo-service-read
-              namespace: local
-            port: 8080
----
-apiVersion: gateway.solo.io/v1
-kind: VirtualService
-metadata:
-  name: echo-write
-  namespace: gloo-system
-spec:
-  displayName: echo-write
-  virtualHost:
-    domains:
-    - 'echo-write.localtest.me'
-    routes:
-    - matchers:
-      - prefix: /write1
-      routeAction:
-        single:
-          kube:
-            ref:
-              name: echo-service-write
-              namespace: local
-            port: 8081
-      options:
-        prefixRewrite: /echo-write
-    - matchers:
-      - prefix: /write2
-      routeAction:
-        single:
-          kube:
-            ref:
-              name: echo-service-write
-              namespace: local
-            port: 8082
+# ---
+# apiVersion: gateway.solo.io/v1
+# kind: VirtualService
+# metadata:
+#   name: regex
+#   namespace: gloo-system
+# spec:
+#   displayName: regex
+#   virtualHost:
+#     domains:
+#     - 'regex.localtest.me'
+#     routes:
+#     - matchers:
+#       - prefix: /404
+#       routeAction:
+#         single:
+#           kube:
+#             ref:
+#               name: echo-service-read
+#               namespace: local
+#             port: 8080
+#       options:
+#         regexRewrite:
+#           pattern:
+#             regex: '/404'
+#           substitution: '/xxx.html'
+# ---
+# apiVersion: gateway.solo.io/v1
+# kind: VirtualService
+# metadata:
+#   name: echo-read
+#   namespace: gloo-system
+# spec:
+#   displayName: echo-read
+#   virtualHost:
+#     domains:
+#     - 'echo-read.localtest.me'
+#     routes:
+#     - matchers:
+#       - prefix: /read
+#       routeAction:
+#         single:
+#           kube:
+#             ref:
+#               name: echo-service-read
+#               namespace: local
+#             port: 8080
+# ---
+# apiVersion: gateway.solo.io/v1
+# kind: VirtualService
+# metadata:
+#   name: echo-write
+#   namespace: gloo-system
+# spec:
+#   displayName: echo-write
+#   virtualHost:
+#     domains:
+#     - 'echo-write.localtest.me'
+#     routes:
+#     - matchers:
+#       - prefix: /write1
+#       routeAction:
+#         single:
+#           kube:
+#             ref:
+#               name: echo-service-write
+#               namespace: local
+#             port: 8081
+#       options:
+#         prefixRewrite: /echo-write
+#     - matchers:
+#       - prefix: /write2
+#       routeAction:
+#         single:
+#           kube:
+#             ref:
+#               name: echo-service-write
+#               namespace: local
+#             port: 8082
