@@ -58,7 +58,7 @@ spec:
     - 'echo-write.localtest.me'
     routes:
     - matchers:
-      - prefix: /write
+      - prefix: /write1
       routeAction:
         single:
           kube:
@@ -68,3 +68,12 @@ spec:
             port: 8081
       options:
         prefixRewrite: /echo-write
+    - matchers:
+      - prefix: /write2
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: echo-service-write
+              namespace: local
+            port: 8082
