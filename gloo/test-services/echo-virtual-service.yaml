@@ -68,7 +68,6 @@ spec:
             port: 8081
       options:
         prefixRewrite: /echo-write
-    - matchers:
       - prefix: /write2
       routeAction:
         single:
