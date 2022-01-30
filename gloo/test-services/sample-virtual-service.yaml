@@ -1,0 +1,21 @@
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: sample-service
+  namespace: gloo-system
+spec:
+  displayName: sample-service
+  virtualHost:
+    domains:
+    - 'sample-service.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: sample-service
+              namespace: local
+            port: 80
