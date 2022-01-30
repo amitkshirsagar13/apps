@@ -45,8 +45,6 @@ spec:
               name: echo-service-read
               namespace: local
             port: 8080
-      options:
-        prefixRewrite: /
 ---
 apiVersion: gateway.solo.io/v1
 kind: VirtualService
