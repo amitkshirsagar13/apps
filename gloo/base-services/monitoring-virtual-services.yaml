@@ -103,3 +103,25 @@ spec:
               name: kube-prometheus-stack-prometheus-node-exporter
               namespace: monitoring
             port: 9100
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: gloo-access-log
+  namespace: gloo-system
+spec:
+  displayName: gloo-access-log
+  virtualHost:
+    domains:
+    - 'access-log.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: gateway-proxy-access-logger
+              namespace: gloo-system
+            port: 8083
+            
