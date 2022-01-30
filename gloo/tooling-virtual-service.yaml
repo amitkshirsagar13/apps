@@ -1,0 +1,21 @@
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: argo-cd
+  namespace: gloo-system
+spec:
+  displayName: argo-cd
+  virtualHost:
+    domains:
+    - 'argo-cd.localtest.me'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          kube:
+            ref:
+              name: argo-cd-argocd-server
+              namespace: tooling
+            port: 80

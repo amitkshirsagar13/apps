@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: local
-  namespace: argocd
+  namespace: tooling
   # Finalizer that ensures that project is not deleted until it is not referenced by any application
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -17,6 +17,8 @@ spec:
   # Only permit applications to deploy to the guestbook namespace in the same cluster
   destinations:
   - namespace: argocd
+    server: https://kubernetes.default.svc
+  - namespace: tooling
     server: https://kubernetes.default.svc
   - namespace: apps
     server: https://kubernetes.default.svc

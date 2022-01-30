@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: local-stack
-  namespace: argocd
+  namespace: tooling
 spec:
   project: local
   source:
